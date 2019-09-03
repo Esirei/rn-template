@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {NavigationService} from '../../navigation';
+import {NavigationService} from '@navigation';
 
 export default () => {
   const returnHome = useCallback(() => NavigationService.navigate('Home'), []);
