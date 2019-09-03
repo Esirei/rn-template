@@ -24,8 +24,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/lib/integration/react';
+import {store, persistor} from './store';
+
 const App = () => {
-  return (
+  const oldContent = () => (
     <Fragment>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
@@ -69,6 +73,14 @@ const App = () => {
         </ScrollView>
       </SafeAreaView>
     </Fragment>
+  );
+
+  return (
+    <Provider store={store}>
+      <PersistGate loading={<View />} persistor={persistor}>
+        {oldContent()}
+      </PersistGate>
+    </Provider>
   );
 };
 
