@@ -23,7 +23,7 @@ export default () => {
 
   const welcomeUser = () => {
     const {first_name, last_name} = user;
-    return <Text>{`Welcome to IOCrm, ${first_name} ${last_name}`}</Text>;
+    return <Text>{`Welcome, ${first_name} ${last_name}`}</Text>;
   };
 
   return (
