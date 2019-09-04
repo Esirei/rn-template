@@ -153,6 +153,8 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+//            applicationIdSuffix ".debug" // can enable this if using the --appIdSuffix option to run react-native
+            versionNameSuffix "-debug"
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
