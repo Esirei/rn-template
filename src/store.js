@@ -14,6 +14,7 @@ const persistedReducer = persistReducer(persistConfig, appReducer);
 
 // https://github.com/zalmoxisus/redux-devtools-extension
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// Add middlewares to array
 const middlewares = [thunk, createLogger()];
 const enhancers = [applyMiddleware(...middlewares)];
 
