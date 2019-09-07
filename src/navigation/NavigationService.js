@@ -6,6 +6,10 @@ function setAppNavigator(nav) {
   _navigator = nav;
 }
 
+function getAppNavigator() {
+  return _navigator;
+}
+
 function navigate(routeName, params?, action?) {
   _navigator.dispatch(
     NavigationActions.navigate({
@@ -61,6 +65,7 @@ function toggleDrawer() {
 
 export default {
   setAppNavigator,
+  getAppNavigator,
   navigate,
   setParams,
   push,

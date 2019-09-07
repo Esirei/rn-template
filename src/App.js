@@ -17,6 +17,7 @@ const useAuthNavigation = () => {
       const user = userSelector(store.getState());
       if (oldUser !== user && user) {
         console.log('user logged in, navigate home', user);
+        // should update to if in auth route(s), navigate to home screen
         NavigationService.navigate('Home');
       } else if (!!oldUser && !user) {
         console.log('user logged out, navigate to login');
