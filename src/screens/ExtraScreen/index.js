@@ -1,9 +1,15 @@
 import React, {useCallback} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {login} from '@actions/sessionActions';
+import {login, logout} from '@actions/sessionActions';
 import {userSelector, tokenSelector} from '@selectors/sessionSelector';
 import {NavigationService} from '@navigation';
+
+const Button = ({onPress, text}) => (
+  <TouchableOpacity style={styles.button} onPress={onPress}>
+    <Text>{text}</Text>
+  </TouchableOpacity>
+);
 
 export default () => {
   const dispatch = useDispatch();
@@ -13,13 +19,10 @@ export default () => {
     () => dispatch(login('eve.holt@reqres.in', 'cityslicka')),
     [dispatch],
   );
+  const handleLogout = useCallback(() => dispatch(logout()), [dispatch]);
   const returnHome = useCallback(() => NavigationService.navigate('Home'), []);
 
-  const loginButton = () => (
-    <TouchableOpacity style={styles.button} onPress={handleLogin}>
-      <Text>Login</Text>
-    </TouchableOpacity>
-  );
+  const loginButton = () => <Button onPress={handleLogin} text={'Login'} />;
 
   const welcomeUser = () => {
     const {first_name, last_name} = user;
@@ -34,6 +37,7 @@ export default () => {
         onPress={returnHome}>
         <Text>Go back to home screen</Text>
       </TouchableOpacity>
+      {user && token && <Button onPress={handleLogout} text={'Logout'} />}
     </View>
   );
 };
