@@ -5,8 +5,11 @@ import {login, logout} from '@actions/sessionActions';
 import {userSelector, tokenSelector} from '@selectors/sessionSelector';
 import {NavigationService} from '@navigation';
 
-const Button = ({onPress, text}) => (
-  <TouchableOpacity style={styles.button} onPress={onPress}>
+const Button = ({onPress, text, ...props}) => (
+  <TouchableOpacity
+    style={[styles.button, props.style]}
+    onPress={onPress}
+    {...props}>
     <Text>{text}</Text>
   </TouchableOpacity>
 );
@@ -15,6 +18,7 @@ export default () => {
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
   const token = useSelector(tokenSelector);
+
   const handleLogin = useCallback(
     () => dispatch(login('eve.holt@reqres.in', 'cityslicka')),
     [dispatch],
@@ -22,7 +26,13 @@ export default () => {
   const handleLogout = useCallback(() => dispatch(logout()), [dispatch]);
   const returnHome = useCallback(() => NavigationService.navigate('Home'), []);
 
-  const loginButton = () => <Button onPress={handleLogin} text={'Login'} />;
+  const authButton = () => {
+    return user && token ? (
+      <Button onPress={handleLogout} text={'Logout'} />
+    ) : (
+      <Button onPress={handleLogin} text={'Login'} />
+    );
+  };
 
   const welcomeUser = () => {
     const {first_name, last_name} = user;
@@ -31,13 +41,13 @@ export default () => {
 
   return (
     <View style={styles.container}>
-      {user && token ? welcomeUser() : loginButton()}
-      <TouchableOpacity
-        style={[styles.button, {marginTop: 16}]}
-        onPress={returnHome}>
-        <Text>Go back to home screen</Text>
-      </TouchableOpacity>
-      {user && token && <Button onPress={handleLogout} text={'Logout'} />}
+      {user && token && welcomeUser()}
+      {authButton()}
+      <Button
+        onPress={returnHome}
+        text={'Go back to home screen'}
+        style={{marginTop: 16}}
+      />
     </View>
   );
 };
