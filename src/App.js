@@ -4,7 +4,8 @@ import {View} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import {store, persistor} from './store';
-import Navigation, {NavigationService} from './navigation';
+import Navigation from '@navigation';
+import NavigationService from '@navigation/NavigationService';
 import {userSelector} from '@selectors/sessionSelector';
 
 const useAuthNavigation = () => {

@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {login, logout} from '@actions/sessionActions';
 import {userSelector, tokenSelector} from '@selectors/sessionSelector';
-import {NavigationService} from '@navigation';
+import NavigationService from '@navigation/NavigationService';
 
 const Button = ({onPress, text, ...props}) => (
   <TouchableOpacity
