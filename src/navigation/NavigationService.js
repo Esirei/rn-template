@@ -70,12 +70,12 @@ function toggleDrawer() {
   _navigator.dispatch(DrawerActions.toggleDrawer());
 }
 
-const getCurrentRouteName = (route: NavigationRoute) => {
+const getCurrentRouteName = (route: NavigationRoute): string => {
   const {index, routes, routeName} = route;
-  return routes ? getCurrentRouteName(routes[index]) : routeName;
+  return routes ? getCurrentRouteName(routes[index]) : routeName || '';
 };
 
-const currentRouteName = () => getCurrentRouteName(getRef().state.nav);
+const currentRouteName = (): string => getCurrentRouteName(getRef().state.nav);
 
 export default {
   setRef,
