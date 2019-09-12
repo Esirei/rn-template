@@ -1,12 +1,19 @@
-import {NavigationActions, DrawerActions, StackActions} from 'react-navigation';
+import {
+  NavigationActions,
+  DrawerActions,
+  StackActions,
+  NavigationContainer,
+  NavigationRoute,
+  NavigationDispatch,
+} from 'react-navigation';
 
-let _navigator;
+let _navigator: NavigationContainer & {dispatch: NavigationDispatch};
 
-function setAppNavigator(nav) {
+function setRef(nav) {
   _navigator = nav;
 }
 
-function getAppNavigator() {
+function getRef(): NavigationContainer {
   return _navigator;
 }
 
@@ -63,9 +70,16 @@ function toggleDrawer() {
   _navigator.dispatch(DrawerActions.toggleDrawer());
 }
 
+const getCurrentRouteName = (route: NavigationRoute) => {
+  const {index, routes, routeName} = route;
+  return routes ? getCurrentRouteName(routes[index]) : routeName;
+};
+
+const currentRouteName = () => getCurrentRouteName(getRef().state.nav);
+
 export default {
-  setAppNavigator,
-  getAppNavigator,
+  setRef,
+  getRef,
   navigate,
   setParams,
   push,
@@ -75,4 +89,5 @@ export default {
   openDrawer,
   closeDrawer,
   toggleDrawer,
+  currentRouteName,
 };
