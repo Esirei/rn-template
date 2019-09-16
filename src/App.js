@@ -4,8 +4,8 @@ import {View} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from './store';
-import Navigation from '@navigation';
-import NavigationService from '@navigation/NavigationService';
+import Navigation from '@navigation/Navigation';
+import {RouteNames, NavigationService} from '@navigation';
 import {userSelector} from '@selectors/sessionSelector';
 
 const useAuthNavigation = () => {
@@ -21,7 +21,7 @@ const useAuthNavigation = () => {
         // should update to: if in auth route(s), navigate to home screen
         const currentRouteName = NavigationService.currentRouteName();
         console.log('Navigation currentRoute', currentRouteName);
-        NavigationService.navigate('Home');
+        NavigationService.navigate(RouteNames.HOME);
       } else if (!!oldUser && !user) {
         console.log('user logged out, navigate to login');
       }

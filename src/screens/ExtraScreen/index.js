@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {login, logout} from '@actions/sessionActions';
 import {userSelector, tokenSelector} from '@selectors/sessionSelector';
-import NavigationService from '@navigation/NavigationService';
+import {NavigationService, RouteNames} from '@navigation';
 
 const Button = ({onPress, text, ...props}) => (
   <TouchableOpacity
@@ -24,7 +24,7 @@ export default () => {
     [dispatch],
   );
   const handleLogout = useCallback(() => dispatch(logout()), [dispatch]);
-  const returnHome = useCallback(() => NavigationService.navigate('Home'), []);
+  const returnHome = useCallback(() => NavigationService.navigate(RouteNames.HOME), []);
 
   const authButton = () => {
     return user && token ? (
