@@ -71,7 +71,7 @@ try {
     arrayReplaces.reduce(
       (string, array) => string.replace(array[0], array[1]),
       JSON.stringify(tsConfig, arrayReplacer, 2),
-    ),
+    ) + '\n',
     'utf8',
   );
 } catch (e) {
