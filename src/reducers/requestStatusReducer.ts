@@ -13,8 +13,7 @@ interface PayloadMergeFn<R> {
 }
 
 export const requestStatusReducer = <R>(
-  name: string,
-  value: R,
+  name?: string,
   mergeFn?: PayloadMergeFn<R>,
 ): RequestReducer<RequestState<R>> => {
   if (!name && !mergeFn) {
@@ -22,7 +21,6 @@ export const requestStatusReducer = <R>(
   }
 
   const initialState = {
-    [name]: value,
     inRequest: false,
     error: null,
   };
