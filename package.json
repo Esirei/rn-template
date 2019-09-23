@@ -9,8 +9,8 @@
     "build-release:android": "jetify && cd android && ./gradlew assembleRelease",
     "build-release:android-bundle": "jetify && cd android && ./gradlew bundleRelease",
     "clean:android": "cd android && ./gradlew clean",
-    "install:android": "cd android && ./gradlew assembleRelease && gradlew installRelease",
-    "memory:android": "adb shell dumpsys meminfo com.rnTemplate",
+    "install:android": "jetify && cd android && ./gradlew installRelease",
+    "memory:android": "adb shell dumpsys meminfo com.rntemplate",
     "generate_images_fonts_resource": "node scripts/images.js && node scripts/fonts.js",
     "test": "jest",
     "lint": "eslint ."
