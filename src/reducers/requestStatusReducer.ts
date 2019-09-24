@@ -1,23 +1,27 @@
-interface RequestState<R> {
-  [key: string]: R | any;
-  inRequest: boolean;
-  error: null | any;
+import {AnyAction} from 'redux';
+
+export type RequestState = {inRequest: boolean; error: any};
+
+interface RequestReducer<S extends RequestState> {
+  (state: S, action: AnyAction): S;
 }
 
-interface RequestReducer<R> {
-  (state: RequestState<R>, action: any): RequestState<R>;
-}
+type PayloadMergeFn<R> = (response: R, prev: R) => R;
 
-interface PayloadMergeFn<R> {
-  (response: R, prev: R): R;
-}
+// key: the key of the response in the state
+export function requestStatusReducer<S extends RequestState>(
+  key: string,
+): RequestReducer<S>;
 
-export const requestStatusReducer = <R>(
-  name?: string,
-  mergeFn?: PayloadMergeFn<R>,
-): RequestReducer<RequestState<R>> => {
-  if (!name && !mergeFn) {
-    throw 'A name, mergeFn, or name and mergeFn must be defined';
+// if key is defined, the prev parameter of mergeFn is the value of the key in the current state else the whole state
+export function requestStatusReducer<T, S extends RequestState>(
+  key: string | undefined,
+  mergeFn: PayloadMergeFn<T>,
+): RequestReducer<S>;
+
+export function requestStatusReducer(key?, mergeFn?) {
+  if (!key && !mergeFn) {
+    throw 'A key, mergeFn, or key and mergeFn must be defined';
   }
 
   const initialState = {
@@ -25,6 +29,7 @@ export const requestStatusReducer = <R>(
     error: null,
   };
 
+  // @ts-ignore
   return (state = initialState, action) => {
     const {type, payload, error} = action;
     const matches = /.*_(REQUEST|SUCCESS|FAILURE)/.exec(type);
@@ -37,7 +42,7 @@ export const requestStatusReducer = <R>(
           return {
             ...state,
             inRequest: false,
-            ...response(state, payload, name, mergeFn),
+            ...response(state, payload, key, mergeFn),
           };
         case 'FAILURE':
           return {...state, inRequest: false, error};
@@ -47,11 +52,11 @@ export const requestStatusReducer = <R>(
     }
     return state;
   };
-};
+}
 
-const response = (state, payload, name, mergeFn) => {
-  return name
-    ? {[name]: mergeFn ? mergeFn(payload, state[name]) : payload}
+const response = (state, payload, key, mergeFn) => {
+  return key
+    ? {[key]: mergeFn ? mergeFn(payload, state[key]) : payload}
     : mergeFn(payload, state);
 };
 

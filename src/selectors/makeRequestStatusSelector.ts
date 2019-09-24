@@ -1,6 +1,6 @@
 import {createSelector, Selector} from 'reselect';
+import {RequestState} from '@reducers/requestStatusReducer';
 
-type RequestState = {inRequest: boolean; error: any};
 export type RequestStatus = [boolean, any];
 
 export const makeRequestStatusSelector = <S>(
