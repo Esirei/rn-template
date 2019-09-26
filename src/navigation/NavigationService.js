@@ -75,7 +75,9 @@ const getCurrentRouteName = (route: NavigationRoute): string => {
   return routes ? getCurrentRouteName(routes[index]) : routeName || '';
 };
 
-const currentRouteName = (): string => getCurrentRouteName(getRef().state.nav);
+const currentRouteName = (): string => {
+  return getRef() ? getCurrentRouteName(getRef().state.nav) : '';
+};
 
 export default {
   setRef,
