@@ -1,5 +1,5 @@
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import RouteNames from './RouteNames';
 import InitialScreenSwitcher from '@components/InitialScreenSwitcher';
 import ExtraScreen from '@screens/ExtraScreen';

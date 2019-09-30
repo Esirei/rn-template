@@ -1,11 +1,11 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
-import {store, persistor} from './store';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
 import Navigation from '@navigation/Navigation';
-import {NavigationService} from '@navigation';
+import { NavigationService } from '@navigation';
 import useAuthNavigation from '@hooks/useAuthNavigation';
 
 const App = () => {

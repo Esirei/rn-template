@@ -1,7 +1,7 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import Client from './client';
-import {store} from '../store';
-import {tokenSelector} from '@selectors/sessionSelector';
+import { store } from '../store';
+import { tokenSelector } from '@selectors/sessionSelector';
 
 // Modify file as needed. (❁´◡`❁)
 
@@ -23,7 +23,7 @@ const dataResponseInterceptor = response => {
 
 const clientConfig = {
   baseURL: 'https://reqres.in/api/',
-  headers: {'User-Agent': Platform.OS === 'ios' ? 'iOS' : 'Android'},
+  headers: { 'User-Agent': Platform.OS === 'ios' ? 'iOS' : 'Android' },
 };
 
 const client = new Client(clientConfig)

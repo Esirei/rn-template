@@ -1,4 +1,7 @@
-import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+
+type RequestConfig = AxiosRequestConfig | Promise<AxiosRequestConfig>;
+type ResponseConfig = AxiosResponse | Promise<AxiosResponse>;
 
 export default class Client {
   private httpClient: AxiosInstance;
@@ -9,7 +12,7 @@ export default class Client {
   }
 
   setDefaultConfig = (config: AxiosRequestConfig) => {
-    this.httpClient.defaults = {...this.httpClient.defaults, ...config};
+    this.httpClient.defaults = { ...this.httpClient.defaults, ...config };
     return this;
   };
 
@@ -18,19 +21,19 @@ export default class Client {
     return this;
   };
 
-  requestInterceptor = (interceptor: (config: AxiosRequestConfig) => AxiosRequestConfig | Promise<AxiosRequestConfig>) => {
+  requestInterceptor = (interceptor: (config: AxiosRequestConfig) => RequestConfig) => {
     this.httpClient.interceptors.request.use(interceptor);
     return this;
   };
 
-  responseInterceptor = (interceptor: (response: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>) => {
+  responseInterceptor = (interceptor: (response: AxiosResponse) => ResponseConfig) => {
     this.httpClient.interceptors.response.use(interceptor);
     return this;
   };
 
-  delete = (url: string, params?: any) => this.httpClient.delete(url, {params});
+  delete = (url: string, params?: any) => this.httpClient.delete(url, { params });
 
-  get = (url: string, params?: any) => this.httpClient.get(url, {params});
+  get = (url: string, params?: any) => this.httpClient.get(url, { params });
 
   patch = (url: string, data?: any) => this.httpClient.patch(url, data);
 

@@ -1,7 +1,7 @@
-import {useEffect} from 'react';
-import {RouteNames, NavigationService} from '@navigation/index';
-import {userSelector} from '@selectors/sessionSelector';
-import {store} from '../store';
+import { useEffect } from 'react';
+import { RouteNames, NavigationService } from '@navigation/index';
+import { userSelector } from '@selectors/sessionSelector';
+import { store } from '../store';
 
 export const useAuthNavigation = () => {
   // effect only runs once after 1st render

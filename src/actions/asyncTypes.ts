@@ -20,7 +20,7 @@ interface ErrorActionCreator<T> {
   (error: T): ErrorAction<T>;
 }
 
-export const actionRequest = (name: string): (() => {type: string}) => {
+export const actionRequest = (name: string): (() => { type: string }) => {
   return () => ({
     type: request(name),
   });

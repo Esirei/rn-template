@@ -1,15 +1,12 @@
-import React, {useCallback} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {login, logout} from '@actions/sessionActions';
-import {userSelector, tokenSelector} from '@selectors/sessionSelector';
-import {NavigationService, RouteNames} from '@navigation';
+import React, { useCallback } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout } from '@actions/sessionActions';
+import { userSelector, tokenSelector } from '@selectors/sessionSelector';
+import { NavigationService, RouteNames } from '@navigation';
 
-const Button = ({onPress, text, ...props}) => (
-  <TouchableOpacity
-    style={[styles.button, props.style]}
-    onPress={onPress}
-    {...props}>
+const Button = ({ onPress, text, ...props }) => (
+  <TouchableOpacity style={[styles.button, props.style]} onPress={onPress} {...props}>
     <Text>{text}</Text>
   </TouchableOpacity>
 );
@@ -19,10 +16,9 @@ export default () => {
   const user = useSelector(userSelector);
   const token = useSelector(tokenSelector);
 
-  const handleLogin = useCallback(
-    () => dispatch(login('eve.holt@reqres.in', 'cityslicka')),
-    [dispatch],
-  );
+  const handleLogin = useCallback(() => dispatch(login('eve.holt@reqres.in', 'cityslicka')), [
+    dispatch,
+  ]);
   const handleLogout = useCallback(() => dispatch(logout()), [dispatch]);
   const returnHome = useCallback(() => NavigationService.navigate(RouteNames.HOME), []);
 
@@ -35,7 +31,7 @@ export default () => {
   };
 
   const welcomeUser = () => {
-    const {first_name, last_name} = user;
+    const { first_name, last_name } = user;
     return <Text>{`Welcome to template, ${first_name} ${last_name}`}</Text>;
   };
 
@@ -43,11 +39,7 @@ export default () => {
     <View style={styles.container}>
       {user && token && welcomeUser()}
       {authButton()}
-      <Button
-        onPress={returnHome}
-        text={'Go back to home screen'}
-        style={{marginTop: 16}}
-      />
+      <Button onPress={returnHome} text={'Go back to home screen'} style={styles.homeButton} />
     </View>
   );
 };
@@ -57,6 +49,9 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+  },
+  homeButton: {
+    marginTop: 16,
   },
   button: {
     justifyContent: 'center',

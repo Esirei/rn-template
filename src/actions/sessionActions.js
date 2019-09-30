@@ -30,7 +30,7 @@ const setToken = token => ({
 export const login = (email, password) => async dispatch => {
   dispatch(loginRequest());
   try {
-    const tokenResponse = await apiClient.post('login', {email, password});
+    const tokenResponse = await apiClient.post('login', { email, password });
     const token = tokenResponse.token;
     console.log(`Token: ${token}`);
     dispatch(setToken(token));
@@ -45,5 +45,5 @@ export const login = (email, password) => async dispatch => {
 };
 
 export const logout = () => dispatch => {
-  dispatch({type: types.SESSION_LOGOUT});
+  dispatch({ type: types.SESSION_LOGOUT });
 };

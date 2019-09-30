@@ -7,7 +7,7 @@ import {
   NavigationDispatch,
 } from 'react-navigation';
 
-let _navigator: NavigationContainer & {dispatch: NavigationDispatch};
+let _navigator: NavigationContainer & { dispatch: NavigationDispatch };
 
 function setRef(nav) {
   _navigator = nav;
@@ -71,7 +71,7 @@ function toggleDrawer() {
 }
 
 const getCurrentRouteName = (route: NavigationRoute): string => {
-  const {index, routes, routeName} = route;
+  const { index, routes, routeName } = route;
   return routes ? getCurrentRouteName(routes[index]) : routeName || '';
 };
 

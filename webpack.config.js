@@ -40,11 +40,7 @@ module.exports = {
 try {
   let tsConfig = require('./tsconfig');
   const finalRegExp = new RegExp(`(".*)(".*)(")(.*${dir}|.*src)(.*)(")`, 'g'); // Regex: /(".*)(".*)(")(.*src\/|.*src)(.*)(")/g
-  const pathReplaces = [
-    [/,/g, ',\n'],
-    [/\\\\/g, '/'],
-    [finalRegExp, '$1/*$2[$3$5/*$6]'],
-  ];
+  const pathReplaces = [[/,/g, ',\n'], [/\\\\/g, '/'], [finalRegExp, '$1/*$2[$3$5/*$6]']];
   const paths = pathReplaces.reduce(
     (string, array) => string.replace(array[0], array[1]),
     JSON.stringify(alias),
@@ -55,7 +51,7 @@ try {
   };
   tsConfig = {
     ...tsConfig,
-    compilerOptions: {...(tsConfig.compilerOptions || {}), ...data},
+    compilerOptions: { ...(tsConfig.compilerOptions || {}), ...data },
   };
   const arrayReplacer = (k, v) => (v instanceof Array ? JSON.stringify(v) : v); // leaves arrays in single line.
   const arrayReplaces = [
