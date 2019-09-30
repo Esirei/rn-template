@@ -1,11 +1,11 @@
 import {
   NavigationActions,
-  DrawerActions,
   StackActions,
   NavigationContainer,
   NavigationRoute,
   NavigationDispatch,
 } from 'react-navigation';
+import { DrawerActions } from 'react-navigation-drawer';
 
 let _navigator: NavigationContainer & { dispatch: NavigationDispatch };
 
