@@ -4,6 +4,10 @@ import { store } from '../store';
 import { tokenSelector } from '@selectors/sessionSelector';
 
 // Modify file as needed. (❁´◡`❁)
+export interface Error {
+  message: string;
+  errors?: { [key: string]: string[] };
+}
 
 // Adds token to request if available in store.
 const authRequestInterceptor = config => {
