@@ -51,7 +51,7 @@ export const actionFailure = <T>(name: string): ErrorActionCreator<T> => {
 export type RAC = () => Action<string>;
 export type FAC<E = Error> = ErrorActionCreator<E>;
 export type AsyncThunk<R = any, A extends Action = AnyAction, E = any> = ThunkAction<
-  PromiseLike<R | void>,
+  PromiseLike<R>,
   AppState,
   E,
   A
