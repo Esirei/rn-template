@@ -31,13 +31,13 @@ export default class Client {
     return this;
   };
 
-  delete = (url: string, params?: any) => this.httpClient.delete(url, { params });
+  delete = <R = any>(url: string, params?: any) => this.httpClient.delete<R>(url, { params });
 
-  get = (url: string, params?: any) => this.httpClient.get(url, { params });
+  get = <R = any>(url: string, params?: any) => this.httpClient.get<R>(url, { params });
 
-  patch = (url: string, data?: any) => this.httpClient.patch(url, data);
+  patch = <R = any>(url: string, data?: any) => this.httpClient.patch<R>(url, data);
 
-  post = (url: string, data?: any) => this.httpClient.post(url, data);
+  post = <R = any>(url: string, data?: any) => this.httpClient.post<R>(url, data);
 
-  put = (url: string, data?: any) => this.httpClient.put(url, data);
+  put = <R = any>(url: string, data?: any) => this.httpClient.put<R>(url, data);
 }
