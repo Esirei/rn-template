@@ -43,17 +43,12 @@ try {
   const replaceSlashRegex = [/\\\\/g, '/']; // Replaces windows dir backslash
   const finalRegExp = new RegExp(`(".*)(".*)(")(.*${dir}|.*src)(.*)(")`, 'g'); // Regex: /(".*)(".*)(")(.*src\/|.*src)(.*)(")/g
 
-  const indexPathReplaces = [addLineRegex, replaceSlashRegex, [finalRegExp, '$1$2[$3$5$6]']];
-  const indexPaths = indexPathReplaces.reduce(
+  const paths = [addLineRegex, replaceSlashRegex].reduce(
     (string, array) => string.replace(array[0], array[1]),
     JSON.stringify(alias),
   );
-
-  const wildcardPathReplaces = [addLineRegex, replaceSlashRegex, [finalRegExp, '$1/*$2[$3$5/*$6]']];
-  const wildcardPaths = wildcardPathReplaces.reduce(
-    (string, array) => string.replace(array[0], array[1]),
-    JSON.stringify(alias),
-  );
+  const indexPaths = paths.replace(finalRegExp, '$1$2[$3$5$6]');
+  const wildcardPaths = paths.replace(finalRegExp, '$1/*$2[$3$5/*$6]');
 
   const allPaths = { ...JSON.parse(indexPaths), ...JSON.parse(wildcardPaths) };
   const sortedPaths = {};
