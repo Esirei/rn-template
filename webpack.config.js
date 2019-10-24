@@ -39,16 +39,33 @@ module.exports = {
 // Fix tsconfig.json module resolution
 try {
   let tsConfig = require('./tsconfig');
+  const addLineRegex = [/,/g, ',\n'];
+  const replaceSlashRegex = [/\\\\/g, '/']; // Replaces windows dir backslash
   const finalRegExp = new RegExp(`(".*)(".*)(")(.*${dir}|.*src)(.*)(")`, 'g'); // Regex: /(".*)(".*)(")(.*src\/|.*src)(.*)(")/g
-  const pathReplaces = [[/,/g, ',\n'], [/\\\\/g, '/'], [finalRegExp, '$1/*$2[$3$5/*$6]']];
-  const paths = pathReplaces.reduce(
+
+  const indexPathReplaces = [addLineRegex, replaceSlashRegex, [finalRegExp, '$1$2[$3$5$6]']];
+  const indexPaths = indexPathReplaces.reduce(
     (string, array) => string.replace(array[0], array[1]),
     JSON.stringify(alias),
   );
+
+  const wildcardPathReplaces = [addLineRegex, replaceSlashRegex, [finalRegExp, '$1/*$2[$3$5/*$6]']];
+  const wildcardPaths = wildcardPathReplaces.reduce(
+    (string, array) => string.replace(array[0], array[1]),
+    JSON.stringify(alias),
+  );
+
+  const allPaths = { ...JSON.parse(indexPaths), ...JSON.parse(wildcardPaths) };
+  const sortedPaths = {};
+  Object.keys(allPaths)
+    .sort()
+    .forEach(key => (sortedPaths[key] = allPaths[key]));
+
   const data = {
     baseUrl: `./${dir}`,
-    paths: JSON.parse(paths),
+    paths: sortedPaths,
   };
+
   tsConfig = {
     ...tsConfig,
     compilerOptions: { ...(tsConfig.compilerOptions || {}), ...data },
@@ -62,14 +79,12 @@ try {
     [/","/g, '", "'],
   ];
 
-  fs.writeFileSync(
-    'tsconfig.json',
-    arrayReplaces.reduce(
-      (string, array) => string.replace(array[0], array[1]),
-      JSON.stringify(tsConfig, arrayReplacer, 2),
-    ) + '\n',
-    'utf8',
-  );
+  const TsConfig =
+    arrayReplaces.reduce((string, array) => {
+      return string.replace(array[0], array[1]);
+    }, JSON.stringify(tsConfig, arrayReplacer, 2)) + '\n';
+
+  fs.writeFileSync('tsconfig.json', TsConfig, 'utf8');
 } catch (e) {
   console.error('tsconfig.json not found');
 }
