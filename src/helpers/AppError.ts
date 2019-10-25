@@ -1,8 +1,10 @@
-class AppError<T> {
+class AppError<T> extends Error {
   private errors: Partial<Record<keyof T, string[]>> = {};
   public message: string = '';
 
-  constructor(e) {
+  constructor(e, name = '') {
+    super(e.message ? e.message : '');
+    this.name = name;
     if (e) {
       this.resetWithErrors(e);
     }
