@@ -3,7 +3,7 @@ class AppError<T> extends Error {
   public message: string = '';
 
   constructor(e, name = '') {
-    super(e.message ? e.message : '');
+    super();
     this.name = name;
     if (e) {
       this.resetWithErrors(e);
