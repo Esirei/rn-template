@@ -69,6 +69,7 @@ export const asyncThunkAction: AsyncThunkCreator = (callback, start, error) => {
       return await callback(dispatch, getState, extraArgument);
     } catch (e) {
       !!error && dispatch(error(e));
+      return await Promise.reject(e);
     }
   };
 };
