@@ -1,16 +1,14 @@
-class AppError<T> extends Error {
+class AppError<T> {
   private errors: Partial<Record<keyof T, string[]>> = {};
   public message: string = '';
 
-  constructor(e, name = '') {
-    super();
-    this.name = name;
+  constructor(e) {
     if (e) {
-      this.resetWithErrors(e);
+      this.setErrors(e);
     }
   }
 
-  setError = (key: keyof T, value: string) => {
+  addError = (key: keyof T, value: string) => {
     const array = this.errors[key] ? this.errors[key] : [];
     array!.push(value); // ! tells typescript value isn't undefined
     this.errors[key] = array;
@@ -24,19 +22,29 @@ class AppError<T> extends Error {
     this.errors[key] = [];
   };
 
-  resetWithError = (key: keyof T, value: string) => {
+  setError = (key: keyof T, value: string) => {
     this.resetError(key);
-    this.setError(key, value);
+    this.addError(key, value);
+  };
+
+  setErrorIf = (invalid: boolean, key: keyof T, value: string) => {
+    if (invalid) {
+      this.setError(key, value);
+    } else {
+      this.resetError(key);
+    }
+  };
+
+  setErrors = e => {
+    if (e) {
+      this.errors = e.errors ? e.errors : {};
+      this.message = e.message ? e.message : '';
+    }
   };
 
   reset = () => {
     this.errors = {};
     this.message = '';
-  };
-
-  resetWithErrors = e => {
-    this.errors = e.errors ? e.errors : {};
-    this.message = e.message ? e.message : '';
   };
 }
 
