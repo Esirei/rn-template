@@ -11,14 +11,6 @@ const ApiInterceptors = () => {
 
   const interceptors = () => api.interceptors();
 
-  // Returns the data object of responses
-  useEffect(() => {
-    interceptors().response.use(value => {
-      console.log('Api response', value);
-      return value.data;
-    });
-  }, []);
-
   // Response error actions
   useEffect(() => {
     let didTokenRefresh = false;
