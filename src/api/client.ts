@@ -1,7 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-
-type RequestConfig = AxiosRequestConfig | Promise<AxiosRequestConfig>;
-type ResponseConfig = AxiosResponse | Promise<AxiosResponse>;
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 export default class Client {
   private httpClient: AxiosInstance;
@@ -27,16 +24,6 @@ export default class Client {
   };
 
   interceptors = () => this.httpClient.interceptors;
-
-  requestInterceptor = (interceptor: (config: AxiosRequestConfig) => RequestConfig) => {
-    this.httpClient.interceptors.request.use(interceptor);
-    return this;
-  };
-
-  responseInterceptor = (interceptor: (response: AxiosResponse) => ResponseConfig) => {
-    this.httpClient.interceptors.response.use(interceptor);
-    return this;
-  };
 
   // AxiosResponse data is returned using the interceptor in the constructor, hence <R, R> is used to override AxiosResponse type here.
   request = <R = any>(config: AxiosRequestConfig) => this.httpClient.request<R, R>(config);

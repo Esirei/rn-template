@@ -5,6 +5,7 @@ export const types = {
   SESSION_LOGIN_SUCCESS: 'SESSION_LOGIN_SUCCESS',
   SESSION_LOGIN_FAILURE: 'SESSION_LOGIN_FAILURE',
   SESSION_SET_TOKEN: 'SESSION_SET_TOKEN',
+  SESSION_SET_TOKENS: 'SESSION_SET_TOKENS',
   SESSION_LOGOUT: 'SESSION_LOGOUT',
 };
 
@@ -25,6 +26,11 @@ const loginFailure = error => ({
 const setToken = token => ({
   type: types.SESSION_SET_TOKEN,
   payload: token,
+});
+
+export const setTokens = tokens => ({
+  type: types.SESSION_SET_TOKENS,
+  payload: tokens,
 });
 
 export const login = (email, password) => async dispatch => {

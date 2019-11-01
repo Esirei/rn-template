@@ -1,8 +1,15 @@
 import { types } from '@actions/sessionActions';
 
-const initialState = {
+export interface SessionState {
+  user: Record<string, any> | null;
+  token: string | null;
+  refreshToken: string | null;
+}
+
+const initialState: SessionState = {
   user: null,
   token: null,
+  refreshToken: null,
 };
 
 export default (state = initialState, action) => {
@@ -15,6 +22,9 @@ export default (state = initialState, action) => {
       return initialState;
     case types.SESSION_SET_TOKEN:
       return { ...state, token: action.payload };
+    case types.SESSION_SET_TOKENS:
+      const { access_token, refresh_token } = action.payload;
+      return { ...state, token: access_token, refreshToken: refresh_token };
     case types.SESSION_LOGOUT:
       return initialState;
     default:
