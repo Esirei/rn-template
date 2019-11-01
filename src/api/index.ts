@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { AxiosRequestConfig } from 'axios';
 import Client from './client';
 
 // Modify file as needed. (❁´◡`❁)
@@ -8,7 +9,7 @@ export interface Error {
   errors?: { [key: string]: string[] };
 }
 
-const clientConfig = {
+const clientConfig: AxiosRequestConfig = {
   baseURL: 'https://reqres.in/api/',
   headers: { 'User-Agent': Platform.OS === 'ios' ? 'iOS' : 'Android' },
 };
