@@ -38,6 +38,7 @@ export default class Client {
     return this;
   };
 
+  // AxiosResponse data is returned using the interceptor in the constructor, hence <R, R> is used to override AxiosResponse type here.
   request = <R = any>(config: AxiosRequestConfig) => this.httpClient.request<R, R>(config);
 
   delete = <R = any>(url: string, params?: any) => this.httpClient.delete<R, R>(url, { params });
