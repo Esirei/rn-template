@@ -27,13 +27,19 @@ const ApiInterceptors = () => {
       console.warn('Token refresh...');
       didTokenRefresh = true;
       const refresh_token = store.getState().session.refreshToken || '';
-      return api.post('refresh-token', { refresh_token }).then(response => {
-        store.dispatch(setTokens(response));
-        return api.request(config).then(value => {
-          didTokenRefresh = false;
-          return value;
+      return api
+        .post('refresh-token', { refresh_token })
+        .then(response => {
+          store.dispatch(setTokens(response));
+          return api.request(config).then(value => {
+            didTokenRefresh = false;
+            return value;
+          });
+        })
+        .catch(reason => {
+          store.dispatch(logout());
+          return reason;
         });
-      });
     };
 
     const id = interceptors().response.use(
