@@ -20,6 +20,7 @@ export const useAuthNavigation = () => {
       } else if (!!oldUser && !user) {
         console.log('user logged out, navigate to login');
       }
+      // @ts-ignore
       oldUser = user;
       console.log('User handler ends...');
     };
