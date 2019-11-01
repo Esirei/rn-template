@@ -8,6 +8,11 @@ export default class Client {
 
   constructor(config: AxiosRequestConfig) {
     this.httpClient = axios.create(config);
+    // Returns the data object of responses
+    this.interceptors().response.use(response => {
+      console.log('Api response', response);
+      return response.data;
+    });
     console.log('Http client created!');
   }
 
@@ -21,6 +26,8 @@ export default class Client {
     return this;
   };
 
+  interceptors = () => this.httpClient.interceptors;
+
   requestInterceptor = (interceptor: (config: AxiosRequestConfig) => RequestConfig) => {
     this.httpClient.interceptors.request.use(interceptor);
     return this;
@@ -31,13 +38,15 @@ export default class Client {
     return this;
   };
 
-  delete = <R = any>(url: string, params?: any) => this.httpClient.delete<R>(url, { params });
+  request = <R = any>(config: AxiosRequestConfig) => this.httpClient.request<R, R>(config);
 
-  get = <R = any>(url: string, params?: any) => this.httpClient.get<R>(url, { params });
+  delete = <R = any>(url: string, params?: any) => this.httpClient.delete<R, R>(url, { params });
 
-  patch = <R = any>(url: string, data?: any) => this.httpClient.patch<R>(url, data);
+  get = <R = any>(url: string, params?: any) => this.httpClient.get<R, R>(url, { params });
 
-  post = <R = any>(url: string, data?: any) => this.httpClient.post<R>(url, data);
+  patch = <R = any>(url: string, data?: any) => this.httpClient.patch<R, R>(url, data);
 
-  put = <R = any>(url: string, data?: any) => this.httpClient.put<R>(url, data);
+  post = <R = any>(url: string, data?: any) => this.httpClient.post<R, R>(url, data);
+
+  put = <R = any>(url: string, data?: any) => this.httpClient.put<R, R>(url, data);
 }
