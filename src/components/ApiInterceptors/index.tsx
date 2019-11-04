@@ -28,9 +28,9 @@ const ApiInterceptors = () => {
             return value;
           });
         })
-        .catch(reason => {
+        .catch(e => {
           store.dispatch(logout());
-          return reason;
+          return Promise.reject(e);
         });
     };
 
@@ -38,7 +38,8 @@ const ApiInterceptors = () => {
       value => value,
       error => {
         const { config, data, status } = error.response || {}; // Network error will make response undefined
-        console.error('Api error!', data, error.toJSON());
+        let message = data ? data.message || data.error : error.message;
+        console.warn(`Api status ${status} error!: ${message}`, data, error.toJSON());
         if (status === 401) {
           if (!didTokenRefresh) {
             return requestToken(config);
@@ -48,7 +49,9 @@ const ApiInterceptors = () => {
         }
         didTokenRefresh = false;
         // Toast can be shown here...
-        return Promise.reject(data || error);
+        message = status >= 500 ? 'Something went wrong' : message; // Error message is same if status is 500 and above
+        const e = status >= 500 ? undefined : data; // Don't need to show trace errors from server
+        return Promise.reject({ ...e, message });
       },
     );
 
