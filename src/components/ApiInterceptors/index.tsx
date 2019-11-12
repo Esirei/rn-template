@@ -1,4 +1,5 @@
 import { memo, useEffect } from 'react';
+import { Platform, ToastAndroid } from 'react-native';
 import { useStore } from 'react-redux';
 import api from '@api';
 import { AppState } from '@types';
@@ -48,8 +49,9 @@ const ApiInterceptors = () => {
           }
         }
         didTokenRefresh = false;
-        // Toast can be shown here...
         message = status >= 500 ? 'Something went wrong' : message; // Error message is same if status is 500 and above
+        // TODO Refactor for iOS too... Probably create a Toast Context later.
+        Platform.OS === 'android' && ToastAndroid.show(message, ToastAndroid.SHORT);
         const e = status >= 500 ? undefined : data; // Don't need to show trace errors from server
         return Promise.reject({ ...e, message });
       },
