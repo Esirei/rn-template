@@ -7,9 +7,6 @@ import {
   NavigationPopActionPayload,
 } from 'react-navigation';
 import { DrawerActions } from 'react-navigation-drawer';
-import RouteNames from './RouteNames';
-
-type RouteName = keyof typeof RouteNames;
 
 let _navigator: NavigationContainer & { dispatch: NavigationDispatch };
 
@@ -21,7 +18,7 @@ function getRef(): NavigationContainer {
   return _navigator;
 }
 
-function navigate(routeName: RouteName, params?, action?) {
+function navigate(routeName: string, params?, action?) {
   _navigator.dispatch(
     NavigationActions.navigate({
       routeName,
