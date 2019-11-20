@@ -4,8 +4,12 @@ import {
   NavigationContainer,
   NavigationRoute,
   NavigationDispatch,
+  NavigationPopActionPayload,
 } from 'react-navigation';
 import { DrawerActions } from 'react-navigation-drawer';
+import RouteNames from './RouteNames';
+
+type RouteName = keyof typeof RouteNames;
 
 let _navigator: NavigationContainer & { dispatch: NavigationDispatch };
 
@@ -17,7 +21,7 @@ function getRef(): NavigationContainer {
   return _navigator;
 }
 
-function navigate(routeName, params?, action?) {
+function navigate(routeName: RouteName, params?, action?) {
   _navigator.dispatch(
     NavigationActions.navigate({
       routeName,
@@ -46,8 +50,8 @@ function push(routeName, params, action) {
   );
 }
 
-function pop() {
-  _navigator.dispatch(StackActions.pop());
+function pop(options: NavigationPopActionPayload = {}) {
+  _navigator.dispatch(StackActions.pop(options));
 }
 
 function popToTop() {
@@ -70,13 +74,15 @@ function toggleDrawer() {
   _navigator.dispatch(DrawerActions.toggleDrawer());
 }
 
-const getCurrentRouteName = (route: NavigationRoute): string => {
+type RouteState = { index: number; routes?: NavigationRoute[]; routeName?: string };
+
+const getCurrentRouteName = (route: RouteState): string => {
   const { index, routes, routeName } = route;
   return routes ? getCurrentRouteName(routes[index]) : routeName || '';
 };
 
 const currentRouteName = (): string => {
-  return getRef() ? getCurrentRouteName(getRef().state.nav) : '';
+  return getRef() ? getCurrentRouteName(getRef().state.nav!) : '';
 };
 
 export default {

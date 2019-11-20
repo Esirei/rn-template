@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@selectors/sessionSelector';
-import { RouteNames } from '@navigation/index';
+import { RouteNames } from '@navigation';
 
 // Just a helper to select the initial app screen, can also be used as splash screen I guess.
 export default ({ navigation }) => {

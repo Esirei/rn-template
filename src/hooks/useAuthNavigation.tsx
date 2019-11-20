@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { RouteNames, NavigationService } from '@navigation/index';
+import { RouteNames, NavigationService } from '@navigation';
 import { userSelector } from '@selectors/sessionSelector';
 import { store } from '../store';
 
