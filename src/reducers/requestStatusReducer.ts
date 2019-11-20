@@ -2,17 +2,17 @@ import { AnyAction } from 'redux';
 
 export type RequestState = { inRequest: boolean; error: any };
 
-interface RequestReducer<S extends RequestState> {
-  (state: S, action: AnyAction): S;
+interface RequestReducer<S> {
+  (state: S, action: AnyAction): S & RequestState;
 }
 
 type PayloadMergeFn<R> = (response: R, prev: R) => R;
 
 // key: the key of the response in the state
-export function requestStatusReducer<S extends RequestState>(key: string): RequestReducer<S>;
+export function requestStatusReducer<S>(key: string): RequestReducer<S>;
 
 // if key is defined, the prev parameter of mergeFn is the value of the key in the current state else the whole state
-export function requestStatusReducer<T, S extends RequestState>(
+export function requestStatusReducer<T, S>(
   key: string | undefined,
   mergeFn: PayloadMergeFn<T>,
 ): RequestReducer<S>;
@@ -27,7 +27,6 @@ export function requestStatusReducer(key?, mergeFn?) {
     error: null,
   };
 
-  // @ts-ignore
   return (state = initialState, action) => {
     const { type, payload, error } = action;
     const matches = /.*_(REQUEST|SUCCESS|FAILURE)/.exec(type);
