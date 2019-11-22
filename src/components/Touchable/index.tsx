@@ -12,16 +12,24 @@ import React from 'react';
 export interface Props extends TouchableNativeFeedbackProps, TouchableHighlightProps {
   children: React.ReactNode;
   onPress?: (event: GestureResponderEvent) => void;
+  borderlessBackground?: boolean;
 }
 
-const Touchable = ({ style, children, ...props }: Props) => {
+const Touchable = ({ style, children, borderlessBackground, ...props }: Props) => {
   const android = () => (
-    <TouchableNativeFeedback {...props}>
+    <TouchableNativeFeedback
+      // @ts-ignore
+      background={TouchableNativeFeedback.Ripple(props.underlayColor, borderlessBackground)}
+      {...props}>
       <View {...{ style }}>{children}</View>
     </TouchableNativeFeedback>
   );
 
-  const others = () => <TouchableHighlight {...{ style, ...props }}>{children}</TouchableHighlight>;
+  const others = () => (
+    <TouchableHighlight {...{ style, ...props }}>
+      <View {...{ style }}>{children}</View>
+    </TouchableHighlight>
+  );
 
   return Platform.OS === 'android' ? android() : others();
 };
