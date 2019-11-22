@@ -18,8 +18,7 @@ export interface Props extends TouchableNativeFeedbackProps, TouchableHighlightP
 const Touchable = ({ style, children, borderlessBackground, ...props }: Props) => {
   const android = () => (
     <TouchableNativeFeedback
-      // @ts-ignore
-      background={TouchableNativeFeedback.Ripple(props.underlayColor, borderlessBackground)}
+      background={TouchableNativeFeedback.Ripple(props.underlayColor!, borderlessBackground)}
       {...props}>
       <View {...{ style }}>{children}</View>
     </TouchableNativeFeedback>
