@@ -13,6 +13,7 @@
     "install:android": "jetify && cd android && ./gradlew installRelease",
     "memory:android": "adb shell dumpsys meminfo com.rntemplate",
     "generate:images/fonts-resource": "node scripts/images.js && node scripts/fonts.js",
+    "set-splash": "react-native set-splash --path src/assets/images/logo.png --background '#FFF'",
     "test": "jest",
     "lint": "eslint ."
   },
