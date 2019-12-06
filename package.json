@@ -55,7 +55,7 @@
     "react-native-rename": "https://github.com/Esirei/react-native-rename",
     "react-test-renderer": "16.9.0",
     "ts-jest": "24.1.0",
-    "typescript": "3.6.3"
+    "typescript": "^3.7.3"
   },
   "jest": {
     "preset": "react-native",
