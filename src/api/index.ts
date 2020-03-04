@@ -14,6 +14,6 @@ const clientConfig: AxiosRequestConfig = {
   headers: { 'User-Agent': Platform.OS === 'ios' ? 'iOS' : 'Android' },
 };
 
-const client = new Client(clientConfig);
+const api = new Client(clientConfig);
 
-export default client;
+export default api;
