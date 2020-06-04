@@ -105,6 +105,6 @@ declare module 'redux' {
       ? (
           ...args: Parameters<TActionCreators[TActionCreatorName]>
         ) => ReturnType<ReturnType<TActionCreators[TActionCreatorName]>>
-      : TActionCreators[TActionCreatorName]
+      : TActionCreators[TActionCreatorName];
   };
 }

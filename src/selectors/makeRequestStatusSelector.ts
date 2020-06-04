@@ -9,10 +9,7 @@ export const requestStatusSelector = (state: RequestState): RequestStatus => [
 ];
 
 export const makeRequestStatusSelector = <S>(stateSelector: Selector<S, RequestState>) => {
-  return createSelector<any, RequestState, RequestStatus>(
-    stateSelector,
-    requestStatusSelector,
-  );
+  return createSelector<any, RequestState, RequestStatus>(stateSelector, requestStatusSelector);
 };
 
 export default makeRequestStatusSelector;

@@ -10,10 +10,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const walkSync = function(dir, fileList) {
+const walkSync = function (dir, fileList) {
   const files = fs.readdirSync(dir);
   fileList = fileList || [];
-  files.forEach(function(file) {
+  files.forEach(function (file) {
     if (fs.statSync(dir + file).isDirectory()) {
       fileList = walkSync(dir + file + '/', fileList);
     } else if (file === 'package.json') {
